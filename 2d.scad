@@ -49,6 +49,8 @@ function rake_poly(up_ramp, down_to_valley, n_of_valleys) =
         [inverse_x(up_ramp)] // down ramp
     ));
 
+function arc( p1, p2, p3 ) = 0
+
 module flat_hanger(n, ramp, down_to_valley){
     polygon(points=rake_poly(ramp, down_to_valley, n));
 }

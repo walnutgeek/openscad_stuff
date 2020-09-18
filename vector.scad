@@ -1,3 +1,5 @@
+function is_nan(x) = x != x ;
+
 // reverse vector
 function reverse(v) = [for (i =[len(v)-1:-1:0]) v[i]];
 // repeat vector n-times

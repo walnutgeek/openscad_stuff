@@ -18,7 +18,38 @@ function join_poly(polys, r = [], i=0) = (i < len(polys)) ?
 
 function line_segment(p1,p2) = [p1,[p2[0]-p1[0], p2[1] - p1[1]]];
 
-function ls_angle(ls) = atan(ls[1][1]/ls[1][0]);
+function ls_slope(ls) = ls[1][1]/ls[1][0] ;
+
+function ls_distance(ls) = sqrt(pow(ls[1][1],2)+pow(ls[1][0],2));
+
+function ls_angle(ls) = 
+    let (ta = asin(ls[1][1]/ls_distance(ls))) 
+    sign(ls[1][0]) == -1 ? sign(ta) * 180 - ta : ta ;
+
+function angle_diff_cw(a1, a2) = a1 < a2 ? angle_diff_cw(a1+360, a2) : a1 - a2 ;
+
+function angle_diff_ccw(a1, a2) = angle_diff_cw(a2, a1);
+
+function ls_midpoint(ls) = ls[0]+ls[1]/2;
+
+function ls_endpoint(ls) = ls[0]+ls[1];
+
+function line(slope,pt) = [slope, pt[1]-slope*pt[0]];
+
+function l_y(l,x) = l[0]*x + l[1];
+
+function l_segment(l,x1,x2) = line_segment([x1, l_y(l,x1)], [x2, l_y(l,x2)]);
+
+function ls_line(ls) = let(slope=ls_slope(ls)) line(slope,ls[0]);
+
+function ls_perpendicular(ls) = 
+    let (l = ls_line(ls)) 
+    let (mp = ls_midpoint(ls))
+    line(-1/l[0], mp);
+
+function intersect_lines(l1, l2) = 
+    let (x = (l2[1]-l1[1])/(l1[0]-l2[0]))
+    [x,l_y(l1,x)];
 
 function interpolate_point(ls,fraction) =  [
     ls[0][0] + fraction*ls[1][0],
@@ -49,8 +80,65 @@ function rake_poly(up_ramp, down_to_valley, n_of_valleys) =
         [inverse_x(up_ramp)] // down ramp
     ));
 
-function arc( p1, p2, p3 ) = 0
+
+function arc_point(a,f) = 
+    let(c = a[0])
+    let(r = a[1])
+    let(initial_angle = a[2])
+    let(cw = a[3])
+    let(range = a[4])
+    let (angle = cw ? initial_angle - f * range : initial_angle + f * range)
+    c+[r*cos(angle),r*sin(angle)];
+
+function arc_poly(a, n_points=10) = [for ( f = [0:1/n_points:1]) arc_point(a, f)] ;
+
+function arc( p1, p2, p3 ) =
+    let(ls1 = line_segment(p1,p2))
+    let(ls2 = line_segment(p2,p3))
+    let(ls3 = line_segment(p1,p3))    
+    let(lp1 = ls_perpendicular(ls1))
+    let(lp2 = ls_perpendicular(ls2))
+    let(lp3 = ls_perpendicular(ls3))
+    let(c12 = intersect_lines(lp1,lp2))
+    let(c23 = intersect_lines(lp2,lp3))
+    let(c13 = intersect_lines(lp1,lp3))
+    let(c = !is_nan(c23[0]) ? c23 : !is_nan(c13[0])? c13 : c12 )
+    let(r1 = line_segment(c,p1))
+    let(r2 = line_segment(c,p2))
+    let(r3 = line_segment(c,p3))
+    let(r = ls_distance(r1))
+    let(a1 = ls_angle(r1))
+    let(a2 = ls_angle(r2))
+    let(a3 = ls_angle(r3))
+    let(cw = angle_diff_cw(a1,a2) < angle_diff_cw(a1,a3))
+    let(a_diff = cw ? angle_diff_cw(a1,a3) : angle_diff_ccw(a1,a3))
+    [c,r,a1,cw,a_diff];
+
+
 
 module flat_hanger(n, ramp, down_to_valley){
     polygon(points=rake_poly(ramp, down_to_valley, n));
 }
+
+module draw_line_segment(ls){
+    t=.03;
+    p_end = ls_endpoint(ls);
+    color("Green") polygon(points=[ls[0]+[t,t],ls[0],p_end,p_end+[t,-t]]);
+}
+
+//-139.97	117.35	-40.0303
+// echo (angle_diff_cw(-139.97,117.35), angle_diff_cw(117.35,-139.97));
+// echo (angle_diff_cw(-139.97,-40.97), angle_diff_cw(-40.97,-139.97));
+// echo (angle_diff_cw(-40.97,117.35), angle_diff_cw(117.35,-40.97));
+// echo (angle_diff_ccw(-139.97,117.35), angle_diff_ccw(117.35,-139.97));
+// echo (angle_diff_ccw(-139.97,-40.97), angle_diff_ccw(-40.97,-139.97));
+// echo (angle_diff_ccw(-40.97,117.35), angle_diff_ccw(117.35,-40.97));
+module test_arc( p1, p2, p3 ) { 
+    color("Red") polygon(points=arc_poly(arc(p1,p2,p3), steps));
+    polygon(points=[p1,p2,p3]);
+}
+
+x = 1; // [-10:0.1:10]
+y = 5; // [-10:0.1:10]
+steps = 10; // [5:100]
+test_arc([0,0],[x,y],[5,0]);

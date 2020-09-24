@@ -8,4 +8,7 @@ valley = concat(
     bc_poly(bezier_curve([3,4],[3,0],[7,0]))
 ); 
 
-linear_extrude(height=8) flat_hanger(6, ramp, valley);
+linear_extrude(height=8)
+polygon(points=rake_poly(ramp, valley, 6));
+
+

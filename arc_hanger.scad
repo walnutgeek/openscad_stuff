@@ -8,4 +8,5 @@ valley = concat(
     arc_poly(arc([4,7.8],[3, 2],[7,0]))
 ); 
 
-linear_extrude(height=8) flat_hanger(6, ramp, valley);
+linear_extrude(height=8)
+polygon(points=rake_poly(ramp, valley, 6));

@@ -115,8 +115,3 @@ function arc( p1, p2, p3 ) =
     [c,r,a1,cw,a_diff];
 
 
-
-module flat_hanger(n, ramp, down_to_valley){
-    polygon(points=rake_poly(ramp, down_to_valley, n));
-}
-

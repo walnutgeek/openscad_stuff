@@ -8,9 +8,10 @@ use <2d.scad>
 
 module countersink(hole_d,hole_h,screw_d){
     screw_h = screw_d - hole_d;
+    h = hole_h - screw_h ;
     union(){
-        cylinder(d=hole_d,h=hole_h-screw_h+e,$fn=50);
-        translate([0,0,hole_h/2]) cylinder(d1=hole_d, d2=screw_d,h=screw_h,$fn=50);
+        cylinder(d=hole_d,h=h+e,$fn=50);
+        translate([0,0,h]) cylinder(d1=hole_d, d2=screw_d,h=screw_h,$fn=50);
     }
 }
 

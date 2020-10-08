@@ -10,5 +10,3 @@ valley = concat(
 
 linear_extrude(height=8)
 polygon(points=rake_poly(ramp, valley, 6));
-
-

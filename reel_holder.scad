@@ -1,4 +1,4 @@
-reelD = 19.7;
+reelD = 19.6;
 p = 3;
 c = 28.5;
 hole = reelD-4;
@@ -39,7 +39,7 @@ difference() {
         //retaining lip
         translate([0,0,p+c]) cylinder(d1=reelD,d2=reelD+lipH, h=lipH);
         translate([0,0,p+c+lipH]) cylinder(d2=reelD,d1=reelD+lipH, h=lipH);
-        //wire dispenser
+        //wire dispenser box
         translate([dispX,dispY,p]) cube([p,6,10]);
     }
     //reel hole
@@ -47,7 +47,7 @@ difference() {
     //springy cutouts
     translate([0,0,p+c+2*lipH-hole/2+e]) cube([gap,50,hole],center=true);
     translate([0,0,p+c+2*lipH-hole/2+e]) cube([50,gap,hole],center=true);
-    //negative prat of wire dispenser
+    //hole of wire dispenser
     translate([dispX-e,dispY+2,p]) cube([p+e+e,2,8]);
     //Counter sink holes in the plate
     translate([25,25,-e]) countersink(3, p+e+e, 4.5);

@@ -1,5 +1,5 @@
 e = 1;
-r = 5.4;
+r = 5.2;
 b = 2; //border
 c = r+b;
 c5 = c/5;
@@ -7,7 +7,7 @@ w1 = 38.25;
 w2 = 41.25;
 h = 19;
 d = 8;
-s = 3; // spacer
+s = 4; // spacer
 offset=w1-r;
 use <2d.scad>
 

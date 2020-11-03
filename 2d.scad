@@ -3,6 +3,7 @@ use <vector.scad>
 function max_x(a, i = 0) = (len(a) == 0) ? 0 : (i < len(a) - 1) ? max(a[i][0], max_x(a, i+1)) : a[i][0];
 function shift_x(a, dx, scaler=1) = [for ( p=a) [scaler*p[0]+dx,p[1]] ];
 function inverse_x(a) = shift_x(reverse(a),max_x(a),-1);
+function mirror_x(a) = shift_x(reverse(a),0,-1);
 
 function concat_with_undefs(prev,next) = 
     len(prev) == 0 ? next : 

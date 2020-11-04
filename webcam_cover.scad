@@ -8,6 +8,10 @@ ld = 2 ;         // lens depth
 t = 4;
 e = .01;
 
+ch = a-15.5;
+cw = lw*3;
+cd = a+t;
+
 use <2d.scad>
 
 half=concat(
@@ -18,11 +22,13 @@ half=concat(
 );
 
 difference(){
-    linear_extrude(height=a+t)
+    linear_extrude(height=cd)
         polygon(points=concat(half, mirror_x(half))); // main shape
     translate([0,a/2,a/2-e]) 
-        cube(size=[lw*3, a, a], center=true);  // webcam body recess
+        cube(size=[cw, a, a], center=true);  // webcam body recess
     translate([0, -ld/2+e, a/2-e]) 
-        cube(size=[lw,ld,a], center=true);     // lens cavity
+        cube(size=[lw,ld,a], center=true);   // lens cavity
+    translate([0,cd/2,ch/2-e]) 
+        cube(size=[cw,cd,ch], center=true);  // back cut
 };
     

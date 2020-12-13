@@ -6,7 +6,7 @@ h=10.8;
 l=1;
 s=10;
 e=0.01;
-
+m=5;
 v=2.3; //releaf param
 
 use <2d.scad>
@@ -53,6 +53,9 @@ difference (){
         translate([0,0,o+h-e]) 
             linear_extrude(height=o*2)
                 polygon(points=scale_poly(in_poly,[1-l/w, 1]));
+        translate([0,0,-e]) 
+            linear_extrude(height=o+2*e)
+                polygon(points=scale_poly(in_poly,[1-m/w, 1-m/d]));
         translate([0, 0, o+h/2])
             cube([3*w, 2*dm, h-2*l],center=true);
         translate([0, d, o+h])

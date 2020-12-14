@@ -1,6 +1,6 @@
 
-w=112;
-d=44;
+w=112.5;
+d=44.2;
 h=15;
 o=2; //outside
 l=1;
@@ -41,8 +41,10 @@ difference (){
     cube(box_with_walls, center=true);
     union(){
         cube(box, center=true);
-        translate([0, l+o, o+l]) rotate([-90, 0, 90]) 
-            hatchbox(d,d+6,h+o+l,w+3*o);
+        translate([0,d/2,o*3])
+        cube( v_add(box_with_walls,e), center=true);
+        translate([0, 0, o+l]) rotate([-90, 0, 90]) 
+            hatchbox(d-6,d,h+o+l,w+3*o);
         translate([0, 3*o, 0]) 
             hatchbox(w-4,w-15,d,h+3*o);
         backwall_alterations(w);

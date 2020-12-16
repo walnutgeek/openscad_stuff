@@ -9,7 +9,6 @@ holder = concat([[54,5],inner_conner],arc_poly(arc([73,8],top,[75,7])),
 
 m=[[-1,0],[0,1]];
 
-tip=[59.3,13.2];
 
 module countersink(hole_d,hole_h, screw_d,screw_h){
     h = hole_h - screw_h ;
@@ -20,15 +19,18 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 }
 
 
-hp = 5;
+hp = [15,15];
+hp2 = [10,6];
+
 module hook(ww){
     translate([ww+1.5,25,0]) 
     rotate([0,-90,0])
     linear_extrude(height=3)
     polygon(points=concat(
-        bc_poly(bezier_curve([0,0],[12,7],[15.5,hp])),
-        arc_poly(arc([15.5,hp],[16.1,hp-1.8],[16,hp-2])),
-        bc_poly(bezier_curve([16,hp-2],[0,-3],[0,-15]))
+        bc_poly(bezier_curve([0,10],[10,16],hp)),
+        arc_poly(arc(hp,hp+[.09,.02],hp+[.5,-1])),
+        bc_poly(bezier_curve(hp+[.5,-1],[10,10],hp2)),
+        bc_poly(bezier_curve(hp2,[10,-7],[0,-10]))
     ));
 }
 
@@ -51,6 +53,7 @@ module backwall(ww)
     }
 
 // hook(0);
+tip=[56,11];
 
 difference(){
     union(){
@@ -68,8 +71,8 @@ difference(){
         rotate([0,-90,0])
         linear_extrude(height=3)
         polygon(points=concat(
-            bc_poly(bezier_curve([0,3],[35,-5],[58,16])),
-            arc_poly(arc([58,16],[59,16],tip)),
+            bc_poly(bezier_curve([0,3],[35,-5],[54,12])),
+            arc_poly(arc(tip+[-2,1],tip+[0,1],tip)),
             bc_poly(bezier_curve(tip,[45,-15],[0,-15]))
         ));
         hook(53.5);
@@ -80,5 +83,5 @@ difference(){
 }
 
 
-// translate([0,20,0]) color("blue") 
-// rotate([0,90,0]) cylinder(h=400,r=.2,center=true);
+translate([0,20,15]) color("blue") 
+rotate([0,90,0]) cylinder(h=400,r=.2,center=true);

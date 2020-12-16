@@ -83,5 +83,5 @@ difference(){
 }
 
 
-translate([0,20,15]) color("blue") 
-rotate([0,90,0]) cylinder(h=400,r=.2,center=true);
+// translate([0,20,15]) color("blue") 
+// rotate([0,90,0]) cylinder(h=400,r=.2,center=true);

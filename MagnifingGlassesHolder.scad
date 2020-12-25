@@ -1,7 +1,13 @@
 use <2d.scad>
 e=.01;
 top = [74,8.3];
-bottom=[60,-2];
+inner_conner = [71,0];
+bottom=[inner_conner[0]+1,-2];
+
+holder = concat([[54,5],inner_conner],arc_poly(arc([73,8],top,[75,7])),
+[bottom],arc_poly(arc([53,3],[52.5,4],[54,5])));
+
+m=[[-1,0],[0,1]];
 
 
 module countersink(hole_d,hole_h, screw_d,screw_h){
@@ -13,27 +19,19 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 }
 
 
-hp = [15,8];
-bp = [0,-8];
-hp1 = hp+[.5,-1];
-function mid(a,b,ratio=.5) = a*ratio + b * (1-ratio);
-hp2 = mid(hp1,bp,.8)+[0,-2];
+hp = [15,15];
+hp2 = [10,6];
 
-hook_poly = concat(
-        bc_poly(bezier_curve([0,5],[10,6],hp)),
-        arc_poly(arc(hp,hp+[.09,.02],hp1)),
-        bc_poly(bezier_curve(hp1,mid(hp1,hp2)+[-.5,.5],hp2)),
-        bc_poly(bezier_curve(hp2,mid(hp2,bp)+[3,-4],bp))
-    );
-
-tbump =[0,0];
-bump_poly = arc_poly(arc(tbump,mid(tbump,bp)+[8,0],bp));
-
-module side_support(ww,poly){
+module hook(ww){
     translate([ww+1.5,25,0]) 
     rotate([0,-90,0])
     linear_extrude(height=3)
-    polygon(points=poly);
+    polygon(points=concat(
+        bc_poly(bezier_curve([0,10],[10,16],hp)),
+        arc_poly(arc(hp,hp+[.09,.02],hp+[.5,-1])),
+        bc_poly(bezier_curve(hp+[.5,-1],[10,10],hp2)),
+        bc_poly(bezier_curve(hp2,[10,-7],[0,-10]))
+    ));
 }
 
 turn_up1 = top-[30,-3.7];
@@ -43,8 +41,8 @@ halfback = concat(
             bc_poly(bezier_curve([0,0],top-[45,5],turn_up1)),
             bc_poly(bezier_curve(turn_up1,top-[27,-5],turn_up2)),
             arc_poly(arc(turn_up2,top-[16,-15],turn_down)),
-            bc_poly(bezier_curve(turn_down,top-[13,-5],bottom)),
-            bc_poly(bezier_curve(bottom,bottom-[3,8],[0,-20]))
+            bc_poly(bezier_curve(turn_down,top-[15,-5],top)),
+            bc_poly(bezier_curve(bottom,bottom-[10,0],[0,-20]))
         );
 
 
@@ -55,17 +53,14 @@ module backwall(ww)
     }
 
 // hook(0);
-tbase=[0,3];
-bbase=[0,-15];
-tip=[75,16];
-ttip=tip+[-2,1];
+tip=[56,11];
 
 horn_poly = concat(
-            bc_poly(bezier_curve(tbase,mid(tbase,ttip,.2)-[0,5],ttip)),
-            arc_poly(arc(ttip,tip+[0,.7],tip)),
-            bc_poly(bezier_curve(tip,mid(tip,bbase,.8)-[0,7],bbase))
+            bc_poly(bezier_curve([0,3],[35,-5],[54,12])),
+            arc_poly(arc(tip+[-2,1],tip+[0,1],tip)),
+            bc_poly(bezier_curve(tip,[45,-15],[0,-15]))
         );
-horn_support = arc_poly(arc(tbase,mid(tbase,bbase)+[9,0],bbase));
+horn_support = arc_poly(arc([0,3],[9,-6],[0,-15]));
 
 module centered_poly(h,poly){
     translate([h/2,0,0])
@@ -76,6 +71,12 @@ module centered_poly(h,poly){
 
 difference(){
     union(){
+        linear_extrude(height=20,,scale=[.98,.9])
+        polygon(points=holder);
+
+        linear_extrude(height=20,scale=[.98,.9])
+        polygon(points=scale_poly(holder,s=[-1,1]));
+
         linear_extrude(height=3)
         polygon(points=concat(halfback, symmetry_x(halfback)
         ));
@@ -83,14 +84,8 @@ difference(){
         centered_poly(3,horn_poly);
         centered_poly(5,horn_support);
 
-        side_support(53.5,bump_poly);
-        side_support(-53.5,bump_poly);
-
-        translate([0,-23, 0]) {
-            side_support(53.5,hook_poly);
-            side_support(-53.5,hook_poly);
-        }
-
+        hook(53.5);
+        hook(-53.5);
     }
     backwall(40);
     backwall(-40);

@@ -1,6 +1,8 @@
 use <2d.scad>
 e=.01;
-top = [74,8.3];
+th=3;
+
+top = [76,9.3];
 bottom=[60,-2];
 
 
@@ -13,8 +15,8 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 }
 
 
-hp = [15,8];
-bp = [0,-8];
+hp = [18,8];
+bp = [0,-6];
 hp1 = hp+[.5,-1];
 function mid(a,b,ratio=.5) = a*ratio + b * (1-ratio);
 hp2 = mid(hp1,bp,.8)+[0,-2];
@@ -26,13 +28,13 @@ hook_poly = concat(
         bc_poly(bezier_curve(hp2,mid(hp2,bp)+[3,-4],bp))
     );
 
-tbump =[0,0];
-bump_poly = arc_poly(arc(tbump,mid(tbump,bp)+[8,0],bp));
+tbump =[1,0];
+bump_poly = arc_poly(arc(tbump,mid(tbump,bp)+[7,0],bp));
 
 module side_support(ww,poly){
-    translate([ww+1.5,25,0]) 
+    translate([ww+th/2,26,0]) 
     rotate([0,-90,0])
-    linear_extrude(height=3)
+    linear_extrude(height=th)
     polygon(points=poly);
 }
 
@@ -57,7 +59,7 @@ module backwall(ww)
 // hook(0);
 tbase=[0,3];
 bbase=[0,-15];
-tip=[75,16];
+tip=[78,16];
 ttip=tip+[-2,1];
 
 horn_poly = concat(
@@ -76,19 +78,20 @@ module centered_poly(h,poly){
 
 difference(){
     union(){
-        linear_extrude(height=3)
+        linear_extrude(height=th)
         polygon(points=concat(halfback, symmetry_x(halfback)
         ));
 
-        centered_poly(3,horn_poly);
-        centered_poly(5,horn_support);
-
-        side_support(53.5,bump_poly);
-        side_support(-53.5,bump_poly);
+        translate([0, -3.5, 0]){
+            centered_poly(th,horn_poly);
+            centered_poly(th+2,horn_support);
+        }
+        side_support(55.5,bump_poly);
+        side_support(-55.5,bump_poly);
 
         translate([0,-23, 0]) {
-            side_support(53.5,hook_poly);
-            side_support(-53.5,hook_poly);
+            side_support(55.5,hook_poly);
+            side_support(-55.5,hook_poly);
         }
 
     }

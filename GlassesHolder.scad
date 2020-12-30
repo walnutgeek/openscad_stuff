@@ -15,7 +15,7 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 }
 
 
-hp = [18,8];
+hp = [23,8];
 bp = [0,-6];
 hp1 = hp+[.5,-1];
 function mid(a,b,ratio=.5) = a*ratio + b * (1-ratio);

@@ -135,7 +135,7 @@ function _arc( p1, p2, p3 ) =
 function mid(a,b,ratio=.5) = b + (a-b)*ratio ; 
 
 function triangle(a,b,split,height) =
-    let (delta = (mid(a,b,height)-a) * [[0,1],[-1,0]])
+    let (delta = (mid(a,b,height)-b) * [[0,1],[-1,0]])
     let (z = mid(a,b,split) + delta)
     [a,z,b];
 
@@ -144,8 +144,15 @@ function triangle(a,b,split,height) =
 assert(arc([0,0],[0,1],[1,1])==arc([[0,0],[0,1],[1,1]]));
 assert(bezier_curve([0,0],[0,1],[1,1])==bezier_curve([[0,0],[0,1],[1,1]]));
 
+// echo(arc([0,0],[0,1],[1,1]));
+// echo(arc(triangle([0,0],[1,1],.5,-.5)));
+
 assert(arc([0,0],[0,1],[1,1])==arc(triangle([0,0],[1,1],.5,-.5)));
-assert(arc([0,0],[1,0],[1,1])==arc(triangle([0,0],[1,1],.5,.5)));
 assert(arc([1,1],[1,2],[2,2])==arc(triangle([1,1],[2,2],.5,-.5)));
+
+// echo(arc([0,0],[1,0],[1,1]));
+// echo(arc(triangle([0,0],[1,1],.5,.5)));
+
+assert(arc([0,0],[1,0],[1,1])==arc(triangle([0,0],[1,1],.5,.5)));
 assert(arc([1,1],[2,1],[2,2])==arc(triangle([1,1],[2,2],.5,.5)));
 

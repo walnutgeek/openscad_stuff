@@ -144,8 +144,8 @@ function triangle(a,b,split,height) =
 assert(arc([0,0],[0,1],[1,1])==arc([[0,0],[0,1],[1,1]]));
 assert(bezier_curve([0,0],[0,1],[1,1])==bezier_curve([[0,0],[0,1],[1,1]]));
 
-assert(arc([0,0],[0,1],[1,1])==arc(triangle([0,0],[1,1],.5,.5)));
-assert(arc([0,0],[1,0],[1,1])==arc(triangle([0,0],[1,1],.5,-.5)));
-assert(arc([1,1],[1,2],[2,2])==arc(triangle([1,1],[2,2],.5,.5)));
-assert(arc([1,1],[2,1],[2,2])==arc(triangle([1,1],[2,2],.5,-.5)));
+assert(arc([0,0],[0,1],[1,1])==arc(triangle([0,0],[1,1],.5,-.5)));
+assert(arc([0,0],[1,0],[1,1])==arc(triangle([0,0],[1,1],.5,.5)));
+assert(arc([1,1],[1,2],[2,2])==arc(triangle([1,1],[2,2],.5,-.5)));
+assert(arc([1,1],[2,1],[2,2])==arc(triangle([1,1],[2,2],.5,.5)));
 

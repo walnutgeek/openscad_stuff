@@ -64,7 +64,11 @@ function interpolate_point(ls,fraction) =  [
     ls[0][1] + fraction*ls[1][1]
 ];
 
-function bezier_curve(p1 , p2,  p3) =
+
+function bezier_curve( a, b, c ) =
+    len(a)==3 ? _bezier_curve(a[0],a[1],a[2]) : _bezier_curve(a,b,c);
+
+function _bezier_curve( p1, p2, p3 ) =
     [line_segment(p1,p2), line_segment(p2, p3)];
 
 function curve_point(bc, fraction) =
@@ -100,7 +104,10 @@ function arc_point(a,f) =
 
 function arc_poly(a, n_points=10) = [for ( f = [0:1/n_points:1]) arc_point(a, f)] ;
 
-function arc( p1, p2, p3 ) =
+function arc( a, b, c ) =
+    len(a)==3 ? _arc(a[0],a[1],a[2]) : _arc(a,b,c);
+
+function _arc( p1, p2, p3 ) =
     let(ls1 = line_segment(p1,p2))
     let(ls2 = line_segment(p2,p3))
     let(ls3 = line_segment(p1,p3))    
@@ -122,4 +129,23 @@ function arc( p1, p2, p3 ) =
     let(a_diff = cw ? angle_diff_cw(a1,a3) : angle_diff_ccw(a1,a3))
     [c,r,a1,cw,a_diff];
 
+
+// linear interpolation or extrapolation (middle by default or any ratio) 
+// using 2 points `a` and `b`
+function mid(a,b,ratio=.5) = b + (a-b)*ratio ; 
+
+function triangle(a,b,split,height) =
+    let (delta = (mid(a,b,height)-a) * [[0,1],[-1,0]])
+    let (z = mid(a,b,split) + delta)
+    [a,z,b];
+
+
+
+assert(arc([0,0],[0,1],[1,1])==arc([[0,0],[0,1],[1,1]]));
+assert(bezier_curve([0,0],[0,1],[1,1])==bezier_curve([[0,0],[0,1],[1,1]]));
+
+assert(arc([0,0],[0,1],[1,1])==arc(triangle([0,0],[1,1],.5,.5)));
+assert(arc([0,0],[1,0],[1,1])==arc(triangle([0,0],[1,1],.5,-.5)));
+assert(arc([1,1],[1,2],[2,2])==arc(triangle([1,1],[2,2],.5,.5)));
+assert(arc([1,1],[2,1],[2,2])==arc(triangle([1,1],[2,2],.5,-.5)));
 

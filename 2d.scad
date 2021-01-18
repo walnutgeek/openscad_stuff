@@ -31,8 +31,14 @@ function ls_slope(ls) = ls[1][1]/ls[1][0] ;
 function ls_distance(ls) = sqrt(pow(ls[1][1],2)+pow(ls[1][0],2));
 
 function ls_angle(ls) = 
-    let (ta = asin(ls[1][1]/ls_distance(ls))) 
-    sign(ls[1][0]) == -1 ? sign(ta) * 180 - ta : ta ;
+    let (ss = sign(ls[1][1]) == -1 ? -1 : 1)
+    let (sc = sign(ls[1][0]) == -1 ? -1 : 1)
+    let (ts = asin(ls[1][1]/ls_distance(ls))) 
+    ts != 0 ? ( sc == -1 ? ss * 180 - ts : ts ) : ss*acos(ls[1][0]/ls_distance(ls))  ;
+    
+assert(ls_angle([[0, 0], [1, 0]])==0);
+assert(ls_angle([[0, 0], [-1, 0]])==180);
+
 
 function angle_diff_cw(a1, a2) = a1 < a2 ? angle_diff_cw(a1+360, a2) : a1 - a2 ;
 
@@ -134,7 +140,7 @@ function _arc( p1, p2, p3 ) =
 // using 2 points `a` and `b`
 function mid(a,b,ratio=.5) = b + (a-b)*ratio ; 
 
-function triangle(a,b,split,height) =
+function triangle(a,b,split=.5,height=.5) =
     let (delta = (mid(a,b,height)-b) * [[0,1],[-1,0]])
     let (z = mid(a,b,split) + delta)
     [a,z,b];
@@ -155,4 +161,13 @@ assert(arc([1,1],[1,2],[2,2])==arc(triangle([1,1],[2,2],.5,-.5)));
 
 assert(arc([0,0],[1,0],[1,1])==arc(triangle([0,0],[1,1],.5,.5)));
 assert(arc([1,1],[2,1],[2,2])==arc(triangle([1,1],[2,2],.5,.5)));
+
+// echo(arc(triangle([1,0], [-1,0])));
+assert(arc(triangle([1,0], [-1,0])) ==  [[0, 0], 1, 0, false, 180]);
+
+// echo(arc(triangle([0,-1], [0,1])));
+assert(arc(triangle([0,-1], [0,1])) ==  [[0, 0], 1, -90, false, 180]);
+
+// echo(arc(triangle([0,-1], [0,1],height=-.5)));
+assert(arc(triangle([0,-1], [0,1],height=-.5)) ==  [[0, 0], 1, -90, true, 180]);
 

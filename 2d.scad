@@ -98,7 +98,6 @@ function rake_poly(up_ramp, down_to_valley, n_of_valleys) =
         [inverse_x(up_ramp)] // down ramp
     ));
 
-
 function arc_point(a,f) = 
     let(c = a[0])
     let(r = a[1])
@@ -145,8 +144,6 @@ function triangle(a,b,split=.5,height=.5) =
     let (z = mid(a,b,split) + delta)
     [a,z,b];
 
-
-
 assert(arc([0,0],[0,1],[1,1])==arc([[0,0],[0,1],[1,1]]));
 assert(bezier_curve([0,0],[0,1],[1,1])==bezier_curve([[0,0],[0,1],[1,1]]));
 
@@ -169,5 +166,5 @@ assert(arc(triangle([1,0], [-1,0])) ==  [[0, 0], 1, 0, false, 180]);
 assert(arc(triangle([0,-1], [0,1])) ==  [[0, 0], 1, -90, false, 180]);
 
 // echo(arc(triangle([0,-1], [0,1],height=-.5)));
-assert(arc(triangle([0,-1], [0,1],height=-.5)) ==  [[0, 0], 1, -90, true, 180]);
+assert(arc(triangle([0,-1], [0,1], height=-.5)) ==  [[0, 0], 1, -90, true, 180]);
 

@@ -1,6 +1,9 @@
 use <2d.scad>
 e=.05;
-d = 42.2;
+d114 = 42.2; // OD: 1 1/4"
+d1 = 32.5; // OD: 1"
+d = d1;   
+ratio = d/d114;
 t=3.5;
 w=111.5;
 h = 15;
@@ -9,14 +12,14 @@ origin = [0,0];
 thickness = [0,t];
 outer_end = [w/2,0];
 outer_down=outer_end-thickness;
-down_arc = outer_down-[d/2,d/2];
+down_arc = outer_down-[d,d]/2;
 down_arc_t = down_arc-[2,0];
 
 halfback = concat( [origin, outer_end] , 
             arc_poly(arc(triangle(outer_end, outer_down,height=-.5))),
             arc_poly(arc(triangle(outer_down, down_arc,height=(sqrt(2)-1)/2))),
             arc_poly(arc(triangle(down_arc, down_arc_t,height=-.5))),
-            bc_poly(bezier_curve(triangle(down_arc_t, origin-thickness,.7, .51)))
+            bc_poly(bezier_curve(triangle(down_arc_t, origin-thickness,.7/ratio, .51*ratio)))
         );
 
 module countersink(hole_d, hole_h, screw_d, screw_h){

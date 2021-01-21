@@ -8,6 +8,9 @@ t=3.5;
 w=111.5;
 h = 15;
 
+pcb_thick = 2.5;
+pcb_width = 55.3;
+
 origin = [0,0];
 thickness = [0,t];
 outer_end = [w/2,0];
@@ -39,10 +42,13 @@ module screw(zign){
              countersink(2.5,screw_len,6,2.3);
 }
 
+
 difference(){
     linear_extrude(height=h)
     polygon(points=concat(halfback, symmetry_x(halfback)));
     union(){
+         translate([0,-t-pcb_thick/2,0])
+         cube([pcb_width, pcb_thick, 10 ], center=true);
          screw(1);
          screw(-1);
     }

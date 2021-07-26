@@ -51,7 +51,7 @@ halfback = concat(
 
 module backwall(ww)
     union(){
-        translate([ww,0,-2+e]) 
+        translate([ww,0,-1+e]) 
             countersink(2.5,5,6,2.3);
     }
 

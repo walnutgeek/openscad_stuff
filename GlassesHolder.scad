@@ -1,6 +1,6 @@
 use <2d.scad>
 e=.01;
-th=3;
+th=4;
 
 top = [76,9.3];
 bottom=[60,-2];
@@ -83,7 +83,7 @@ difference(){
 
         translate([0, -3.5, 0]){
             centered_poly(th,horn_poly);
-            centered_poly(th+2,horn_support);
+            centered_poly(th+4,horn_support);
         }
         side_support(55.5,bump_poly);
         side_support(-55.5,bump_poly);

@@ -20,7 +20,6 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 
 
 hp = [12,4];
-hp2 = [10,6];
 
 module hook(ww){
     translate([ww+1.5,25,0]) 

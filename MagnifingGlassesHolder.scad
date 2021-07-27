@@ -19,15 +19,15 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 }
 
 
-hp = [12,4];
+hp = [11,0];
 
 module hook(ww){
     translate([ww+1.5,25,0]) 
     rotate([0,-90,0])
     linear_extrude(height=3)
     polygon(points=concat(
-        bc_poly(bezier_curve(triangle([0,8],hp,height=-.5))),
-        bc_poly(bezier_curve(triangle(hp,[0,-10],height=-.5)))
+        bc_poly(bezier_curve(triangle([0,6],hp,height=-.4))),
+        bc_poly(bezier_curve(triangle(hp,[0,-8],height=-.3)))
     ));
 }
 
@@ -78,8 +78,8 @@ difference(){
         polygon(points=concat(halfback, symmetry_x(halfback)
         ));
 
-        centered_poly(3,horn_poly);
-        centered_poly(5,horn_support);
+        centered_poly(4,horn_poly);
+        centered_poly(7,horn_support);
 
         hook(53.5);
         hook(-53.5);

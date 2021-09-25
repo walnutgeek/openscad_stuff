@@ -104,7 +104,7 @@ function arc_point(a,f) =
     let(initial_angle = a[2])
     let(cw = a[3])
     let(range = a[4])
-    let (angle = cw ? initial_angle - f * range : initial_angle + f * range)
+    let(angle = cw ? initial_angle - f * range : initial_angle + f * range)
     c+[r*cos(angle),r*sin(angle)];
 
 function arc_poly(a, n_points=10) = [for ( f = [0:1/n_points:1]) arc_point(a, f)] ;

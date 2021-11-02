@@ -3,11 +3,14 @@ d = 18.5;
 gap = 1.4;
 angle = 44 ;
 lip = .7;
-e = .05;
+e = .1;
 
 hook_sy = 2 ;
 hook_by = 3 ;
 hook_dx = 2;
+
+notch_h = 3;
+notch_w = 3;
 
 cc = d/2 + gap;
 start = [cc, cc];
@@ -31,21 +34,24 @@ module holder(n_cells,left_side) {
         }
     }
     module cutout(y,q){
+        nw = sign(q) * notch_w / 2;
         linear_extrude(5)
         polygon([
-            [y+q, -e],
-            [-q+cut1_x, -e],
+            [y+q,               -e],
+            [-q+cut1_x,         -e],
             [-q+cut1_x,          q+c1_y-hook_sy],
             [-q+cut1_x+hook_dx,  q+c1_y-hook_by],
             [-q+cut1_x+hook_dx, -q+c1_y+hook_by],
             [-q+cut1_x,         -q+c1_y+hook_sy],
-            [-q+cut1_x, c2_y],
+            [-q+cut1_x,         -q+c2_y],
             [-q+cut2_x,         -q+c2_y-hook_sy],
             [-q+cut2_x-hook_dx, -q+c2_y-hook_by],
             [-q+cut2_x-hook_dx,  q+c2_y+hook_by],
             [-q+cut2_x,          q+c2_y+hook_sy],
-            [-q+cut2_x, rect[1]+e],
-            [y+q, rect[1]+e],
+            [-q+cut2_x,          rect[1]-notch_h+e],
+            [-q+cut2_x-nw,       rect[1]-notch_h+e],
+            [-q+cut2_x-nw,       rect[1]+e],
+            [y+q,                rect[1]+e],
             ]);
     }
 

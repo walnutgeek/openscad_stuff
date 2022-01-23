@@ -1,5 +1,6 @@
 // bit_sizes = [ 5.59, 5.16, 4.76, 4.35, 3.93, 3.58, 3.18 ]; add_space = [];
-bit_sizes = [ 7, 7, 7, 4.75 ]; add_space = [4,8,8,8,4];
+// bit_sizes = [ 7, 7, 7, 4.75 ]; add_space = [4,8,8,8,4];
+bit_sizes = [ 7, 7, 7, 7, 7 ]; add_space = [2,4,4,4,4,2];
 
 space = 1.8;
 e = .2; // enlarge holes by amount

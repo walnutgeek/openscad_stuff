@@ -1,8 +1,8 @@
 
-w=112.5;
-d=44.2;
+w=112.6;
+d=44.3;
 h=15;
-o=2; //outside
+o=3; //outside
 l=1;
 e=0.01;
 
@@ -21,7 +21,7 @@ module countersink(hole_d,hole_h, screw_d,screw_h){
 module backwall_alterations(ww)
     union(){
         // screw hole
-        #translate([ww/4,-d/2-5+e,0]) 
+        translate([ww/4,-d/2-5+e,0]) 
             rotate([-90,0,0]) countersink(2.5,5,6,2.3);
     }
 

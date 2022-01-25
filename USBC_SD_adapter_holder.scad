@@ -1,7 +1,7 @@
-w=98/2;
-d=30/2;
+w=98.2/2;
+d=30.2/2;
 r=4; //roundover
-o=2; //outside
+o=3; //outside
 h=10.8;
 l=1;
 s=10;
@@ -41,7 +41,7 @@ module backwall_alterations(ww)
         translate([ww*.8,-d-5+e,h]) 
             rotate([-90,0,0])
             linear_extrude(height=10) 
-            polygon(concat([[v,-5]],arc_poly(arc([v,0],[0,7],[-v,0]),15),[[-v,-5]]));
+            polygon(concat([[v,-6-e]],arc_poly(arc([v,0],[0,7],[-v,0]),15),[[-v,-6-e]]));
     }
 
 difference (){

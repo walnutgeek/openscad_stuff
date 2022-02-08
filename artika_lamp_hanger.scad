@@ -5,7 +5,7 @@ use <Screws.scad>
 use <2d.scad>
 
 module base(){
-    w = 28;
+    w = 29;
     l = 33;
     thick = 9;
     recess = 1;

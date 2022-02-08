@@ -86,7 +86,7 @@ function curve_point(bc, fraction) =
 
 function bc_poly(bc, n_points=10) = [for ( f = [0:1/n_points:1]) curve_point(bc, f)] ;
 
-function rake_poly(up_ramp, down_to_valley, n_of_valleys) = 
+function rake_poly(up_ramp, down_to_valley, n_of_valleys) = // repeat poligons 
     join_poly(concat(
         [up_ramp],
         repeat(

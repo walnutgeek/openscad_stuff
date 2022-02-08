@@ -1,7 +1,7 @@
 e=.01;
 $fn=100;
 
-function s1_25() = // 1 1/4" screw
+function s1_25() = // Drywall 1 1/4" screw
     let(total_len = 32.3)
     let(thread = 21.5)
     let(shank = 8)
@@ -9,12 +9,20 @@ function s1_25() = // 1 1/4" screw
     let(d_hat = 8.6)
     [total_len, thread, shank, total_len-thread-shank, d_shank-.5, d_shank, d_hat];
 
-function s2() = // 2" screw
+function s2() = // Drywall 2" screw
     let(total_len = 51.4)
     let(thread = 33.5)
     let(shank = 13.3)
     let(d_shank = 3.5)
     let(d_hat = 8.6)
+    [total_len, thread, shank, total_len-thread-shank, d_shank-.5, d_shank, d_hat];  
+
+function a10x0x2x2x6mm() = // artika lamp 10mm screw
+    let(total_len = 10)
+    let(shank = 0)
+    let(thread = total_len - shank - 2)
+    let(d_shank = 3)
+    let(d_hat = 6)
     [total_len, thread, shank, total_len-thread-shank, d_shank-.5, d_shank, d_hat];  
 
 module screw(a, p=0.){

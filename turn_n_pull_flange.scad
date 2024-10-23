@@ -15,8 +15,8 @@ module doughnut(hole_r, out_r, h, n_screw, screw_p, screw_d, init_angle){
     }
 }
 
-//         hole_r, out_r, h, n_screw, screw_p,                screw_d, init_angle){
+//         hole_r, out_r, h, n_screw, screw_p,  screw_d, init_angle){
 translate([-42,0,0]) 
-    doughnut(56/2, 80/2,  1, 2,       68.76/2,                4,       0);
+    doughnut(58/2, 80/2,  2, 2,       69/2,     5,       0);
 translate([42,0,0]) 
-    doughnut(56/2, 80/2,  1, 3,       79.16/2 - 2.8 - 4.72/2, 4,       90);
+    doughnut(58/2, 80/2,  2, 3,       34.6,     5,       90);

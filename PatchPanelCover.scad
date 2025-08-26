@@ -16,8 +16,7 @@ h2 = 9.1;
 
 r = 1;
 
-x1 = 18.8;
-x2 = 16.9;
+x = 2;
 
 $fn=100;
 e=.01;
@@ -26,7 +25,7 @@ difference(){
     cube(size = [w, d+2*t, h], center= true);
     union(){
         for (i=[.5,-.5]) {
-            translate([(w-w_sides)*i,0,0])
+            translate([(w-w_sides-1)*i,0,0])
             cylinder(h+e, r, r, center=true);
         }
 
@@ -43,7 +42,7 @@ difference(){
             cube(size = [w+e, t, h2+e], center= true);
         }
         
-        translate([0,(x1-x2)/2,0])
+        translate([0,x/2,0])
         cube(size = [k2, k, h+e], center= true);
         
         

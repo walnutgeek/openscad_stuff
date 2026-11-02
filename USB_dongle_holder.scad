@@ -19,7 +19,7 @@ finger_d    = 18; // finger hole diameter, 0 for none
 /* [Slots] */
 usba        = [12.2, 4.6]; // USB-A plug [width, thickness]
 usbc        = [8.3, 2.6];  // USB-C plug [width, thickness]
-clear       = 0.3;  // added to each slot dimension
+clear       = 0.2;  // added to each slot dimension
 slot_depth  = 5;
 min_gap     = 2;    // minimal spacing between slots
 end_margin  = 3;    // minimal material at each end
